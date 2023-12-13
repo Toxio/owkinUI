@@ -1,9 +1,13 @@
+import { Provider } from 'react-redux';
+import { store } from '@/store';
+import { General } from "@/pages/general";
+
 function App() {
 
   return (
-    <>
-      <h1 className='w-screen flex justify-center'>Owkin</h1>
-    </>
+    <Provider store={store}>
+      <General/>
+    </Provider>
   )
 }
 

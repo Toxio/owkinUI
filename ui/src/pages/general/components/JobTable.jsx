@@ -126,7 +126,7 @@ export function JobTable({ data, showResultClick }) {
 
         <Button
           onClick={() => setFilters(defaultFilters)}
-          className="mt-6"
+          className="md:mt-6"
         >
           Clear filters
         </Button>

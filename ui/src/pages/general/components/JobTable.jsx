@@ -128,7 +128,7 @@ export function JobTable({ data, showResultClick }) {
           onClick={() => setFilters(defaultFilters)}
           className="mt-6"
         >
-          Clea filters
+          Clear filters
         </Button>
       </div>
 

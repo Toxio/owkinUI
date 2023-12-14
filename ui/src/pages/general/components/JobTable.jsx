@@ -4,10 +4,14 @@ import { Button } from "@/core/components";
 import DataTable from 'react-data-table-component';
 
 export function JobTable({ data, showResultClick }) {
-  const [filters, setFilters] = useState({
+  const defaultFilters = {
+    startDate: '',
+    endDate: '',
     status: '',
     filterType: '',
-  });
+  }
+
+  const [filters, setFilters] = useState(defaultFilters);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -16,7 +20,13 @@ export function JobTable({ data, showResultClick }) {
 
   const filteredData = useMemo(() => {
     return data.filter(item => {
+      const itemDate = new Date(item.start_time).setHours(0, 0, 0, 0);
+      const startDate = filters.startDate ? new Date(filters.startDate).setHours(0, 0, 0, 0) : null;
+      const endDate = filters.endDate ? new Date(filters.endDate).setHours(0, 0, 0, 0) : null;
+
       return (
+        (startDate === null || itemDate === startDate) &&
+        (endDate === null || itemDate === endDate) &&
         (filters.status === '' || item.status === filters.status) &&
         (filters.filterType === '' || item.filter === filters.filterType)
       );
@@ -28,7 +38,7 @@ export function JobTable({ data, showResultClick }) {
       name: 'Actions',
       cell: row => (
         <div className="flex justify-end h-fit">
-          <Button onClick={() => showResultClick(row.id)}>
+          <Button className='ml-2' onClick={() => showResultClick(row.id)}>
             Info
           </Button>
         </div>
@@ -66,7 +76,30 @@ export function JobTable({ data, showResultClick }) {
 
   return (
     <div className="md:w-3/4 md:max-w-5xl overflow-auto">
-      <div className="ml-7 flex flex-wrap gap-4 mb-4">
+      <div className="ml-7 flex flex-wrap gap-4 mb-4 items-center">
+
+        <div>
+          <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
+          <input
+            type="date"
+            name="startDate"
+            value={filters.startDate}
+            onChange={handleFilterChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          />
+        </div>
+        <div>
+          <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">End Date</label>
+          <input
+            type="date"
+            name="endDate"
+            value={filters.endDate}
+            onChange={handleFilterChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          />
+        </div>
+
+
         <div>
           <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
           <select
@@ -94,6 +127,14 @@ export function JobTable({ data, showResultClick }) {
             <option value="unsharpening">UnSharpening</option>
           </select>
         </div>
+
+        <Button
+          onClick={()=> setFilters(defaultFilters)}
+          className="mt-6"
+        >
+          Clea filters
+        </Button>
+
       </div>
 
       <DataTable columns={columns} data={filteredData}/>

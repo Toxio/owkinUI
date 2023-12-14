@@ -77,7 +77,6 @@ export function JobTable({ data, showResultClick }) {
   return (
     <div className="md:w-3/4 md:max-w-5xl overflow-auto">
       <div className="ml-7 flex flex-wrap gap-4 mb-4 items-center">
-
         <div>
           <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
           <input
@@ -98,8 +97,6 @@ export function JobTable({ data, showResultClick }) {
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>
-
-
         <div>
           <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
           <select
@@ -113,7 +110,6 @@ export function JobTable({ data, showResultClick }) {
             <option value="inprogress">In progress</option>
           </select>
         </div>
-
         <div>
           <label htmlFor="filterType" className="block text-sm font-medium text-gray-700">Filter</label>
           <select
@@ -129,12 +125,11 @@ export function JobTable({ data, showResultClick }) {
         </div>
 
         <Button
-          onClick={()=> setFilters(defaultFilters)}
+          onClick={() => setFilters(defaultFilters)}
           className="mt-6"
         >
           Clea filters
         </Button>
-
       </div>
 
       <DataTable columns={columns} data={filteredData}/>

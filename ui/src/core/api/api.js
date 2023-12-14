@@ -5,11 +5,13 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl }), // Set the base URL for the API
   endpoints: (builder) => ({
+
     getList: builder.query({
       query: () => ({
         url: '/job',
       }),
     }),
+
     createJob: builder.mutation({
       query: (formData) => ({
         url: '/job',
@@ -17,6 +19,7 @@ export const api = createApi({
         body: formData,
       }),
     }),
+
     getJobById: builder.query({
       query: (id) => `/job/${id}`,
     }),

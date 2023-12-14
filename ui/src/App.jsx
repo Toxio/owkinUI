@@ -3,7 +3,6 @@ import { store } from '@/store';
 import { General } from "@/pages/general";
 
 function App() {
-
   return (
     <Provider store={store}>
       <General/>

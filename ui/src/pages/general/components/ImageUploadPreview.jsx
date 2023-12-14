@@ -16,7 +16,7 @@ export function ImageUploadPreview({ file }) {
 
   return (
     <div className='flex justify-center mt-4 '>
-      {preview && <img src={preview} alt="Preview" className="w-auto h-40 mb-4 border"/>}
+      {preview && file && <img src={preview} alt="Preview" className="w-auto h-40 mb-4 border"/>}
     </div>
   );
 }

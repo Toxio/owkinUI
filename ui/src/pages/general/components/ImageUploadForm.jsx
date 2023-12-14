@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useCreateJobMutation } from "@/core/api";
 import { Button } from "@/core/components/Button.jsx";
 
@@ -79,4 +80,8 @@ export function ImageUploadForm({ updateList }) {
       {error && <div className="text-red-500">Error: {error.toString()}</div>}
     </form>
   );
+}
+
+ImageUploadForm.propTypes = {
+  updateList: PropTypes.func.isRequired,
 };

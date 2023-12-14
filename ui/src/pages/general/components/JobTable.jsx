@@ -1,8 +1,9 @@
+import { useMemo, useState } from "react";
+import PropTypes from 'prop-types';
 import { Button } from "@/core/components";
 import DataTable from 'react-data-table-component';
-import { useMemo, useState } from "react";
 
-export function JobTable({ data = [], showResultClick }) {
+export function JobTable({ data, showResultClick }) {
   const [filters, setFilters] = useState({
     status: '',
     filterType: '',
@@ -25,7 +26,6 @@ export function JobTable({ data = [], showResultClick }) {
   const columns = [
     {
       name: 'Actions',
-      button: true,
       cell: row => (
         <div className="flex justify-end h-fit">
           <Button onClick={() => showResultClick(row.id)}>
@@ -99,4 +99,13 @@ export function JobTable({ data = [], showResultClick }) {
       <DataTable columns={columns} data={filteredData}/>
     </div>
   );
+}
+
+JobTable.propTypes = {
+  data: PropTypes.array,
+  showResultClick: PropTypes.func,
+};
+
+JobTable.defaultProps = {
+  data: [],
 }

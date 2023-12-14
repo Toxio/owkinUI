@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export function Button({ disabled, onClick, children, ...rest }) {
   return (
     <button
@@ -11,4 +12,10 @@ export function Button({ disabled, onClick, children, ...rest }) {
     </button>
   );
 }
+
+Button.propTypes = {
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  children: PropTypes.node,
+};
 

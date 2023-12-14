@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import { useGetJobByIdQuery } from "@/core/api/index.js";
 import { baseUrl } from '@/core/api/api.constant';
 
@@ -46,3 +47,7 @@ export function JobView({ id }) {
     </div>
   );
 }
+
+JobView.propTypes = {
+  id: PropTypes.string,
+};

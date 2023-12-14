@@ -70,6 +70,7 @@ export function ImageUploadForm({ updateList }) {
         <Button
           type="submit"
           disabled={isLoading}
+          className="md:ml-4"
         >
           {isLoading ? 'Uploading...' : 'Upload'}
         </Button>

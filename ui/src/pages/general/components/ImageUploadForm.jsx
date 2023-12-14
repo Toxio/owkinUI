@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useCreateJobMutation } from "@/core/api";
+import { useCreateJobMutation } from "@/core/api/index.js";
 import { Button } from "@/core/components/Button.jsx";
+import { ImageUploadPreview } from "./ImageUploadPreview.jsx";
 
 export function ImageUploadForm({ updateList }) {
   const [createJob, { isLoading, data, error }] = useCreateJobMutation();
@@ -75,6 +76,8 @@ export function ImageUploadForm({ updateList }) {
           {isLoading ? 'Uploading...' : 'Upload'}
         </Button>
       </div>
+
+      <ImageUploadPreview file={file} />
 
       {isLoading && <div className="text-gray-600">Submitting...</div>}
       {data && <div className="text-green-500">Job Created: {JSON.stringify(data)}</div>}

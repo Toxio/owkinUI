@@ -1,6 +1,6 @@
 import { useGetListQuery } from "@/core/api";
 import { useState } from "react";
-import { ImageUploadForm } from './components/ImageUploadForm';
+import { ImageUploadForm } from '@/pages/general/components/ImageUploadForm.jsx';
 import { JobTable } from "./components/JobTable";
 import { JobView } from "@/pages/general/components/index.js";
 import logoImg from '@/assets/logo.png';
@@ -20,7 +20,7 @@ export function General() {
         <h1 className='text-xl md:text-4xl'>Owkin</h1>
       </div>
       <ImageUploadForm updateList={refetch}/>
-      <div className='flex w-full justify-center mt-6 md:h-3/4 flex-col-reverse md:flex-row '>
+      <div className='flex w-full justify-center mt-6 md:h-[55%] flex-col-reverse md:flex-row '>
         <JobTable
           data={data}
           showResultClick={handleShowResultClick}

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useCreateJobMutation } from "@/core/api/index.js";
+import { useState } from 'react';
+import { useCreateJobMutation, useGetListQuery } from "@/core/api/index.js";
 import { Button } from "@/core/components/Button.jsx";
 import { ImageUploadPreview } from "./ImageUploadPreview.jsx";
 
-export function ImageUploadForm({ updateList }) {
+export function ImageUploadForm() {
+  const { refetch } = useGetListQuery();
   const [createJob, { isLoading, data, error }] = useCreateJobMutation();
 
   const [file, setFile] = useState(null);
@@ -25,7 +25,7 @@ export function ImageUploadForm({ updateList }) {
     formData.append('sigma', sigma);
 
     await createJob(formData).unwrap();
-    updateList();
+    refetch();
     setFile(null);
     setFilter('Blurring');
     setSigma(0);
@@ -85,7 +85,3 @@ export function ImageUploadForm({ updateList }) {
     </form>
   );
 }
-
-ImageUploadForm.propTypes = {
-  updateList: PropTypes.func.isRequired,
-};

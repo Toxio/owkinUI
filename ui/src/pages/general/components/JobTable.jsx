@@ -1,9 +1,12 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types';
 import { Button } from "@/core/components";
 import DataTable from 'react-data-table-component';
+import { useGetListQuery } from "@/core/api/index.js";
 
-export function JobTable({ data, showResultClick }) {
+export function JobTable({ showResultClick }) {
+  const { data, refetch } = useGetListQuery();
+
   const defaultFilters = {
     startDate: '',
     endDate: '',
@@ -74,6 +77,19 @@ export function JobTable({ data, showResultClick }) {
     },
   ];
 
+  // Refresh every 5 seconds if there are processing jobs
+  useEffect(() => {
+    const hasProcessingJobs = data?.some(job => job.status === 'processing');
+
+    if (hasProcessingJobs) {
+      const interval = setInterval(() => {
+        refetch();
+      }, 5000);
+
+      return () => clearInterval(interval);
+    }
+  }, [data, refetch]);
+
   return (
     <div className="md:w-3/4 md:max-w-5xl overflow-auto">
       <div className="ml-7 flex flex-wrap gap-4 mb-4 items-center">
@@ -107,7 +123,7 @@ export function JobTable({ data, showResultClick }) {
           >
             <option value="">All</option>
             <option value="done">Done</option>
-            <option value="inprogress">In progress</option>
+            <option value="processing">Processing</option>
           </select>
         </div>
         <div>

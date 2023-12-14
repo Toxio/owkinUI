@@ -1,4 +1,3 @@
-import { useGetListQuery } from "@/core/api";
 import { useState } from "react";
 import { ImageUploadForm } from '@/pages/general/components/ImageUploadForm.jsx';
 import { JobTable } from "./components/JobTable";
@@ -6,7 +5,6 @@ import { JobView } from "@/pages/general/components/index.js";
 import logoImg from '@/assets/logo.png';
 
 export function General() {
-  const { data, refetch } = useGetListQuery();
   const [jobId, setJobId] = useState(null);
 
   const handleShowResultClick = (id) => {
@@ -19,10 +17,9 @@ export function General() {
         <img src={logoImg} alt='logo'/>
         <h1 className='text-xl md:text-4xl'>Owkin</h1>
       </div>
-      <ImageUploadForm updateList={refetch}/>
+      <ImageUploadForm />
       <div className='flex w-full justify-center mt-6 md:h-[55%] flex-col-reverse md:flex-row '>
         <JobTable
-          data={data}
           showResultClick={handleShowResultClick}
         />
         <JobView id={jobId}/>

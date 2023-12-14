@@ -1,39 +1,102 @@
 import { Button } from "@/core/components";
-import { formatDate } from "@/utils";
+import DataTable from 'react-data-table-component';
+import { useMemo, useState } from "react";
 
-export function JobTable({ data = [], showResultClick, isLoading }) {
-  return (
-    <div className="md:w-3/4 max-w-4xl overflow-auto">
-      <div className="bg-white shadow-md rounded my-6">
-        {/* Table Header */}
-        <div className="flex border-b border-gray-200 p-4">
-          <div className="w-1/6 font-bold text-gray-600">ID</div>
-          <div className="w-1/6 font-bold text-gray-600">Status</div>
-          <div className="w-1/6 font-bold text-gray-600">Filter</div>
-          <div className="w-1/6 font-bold text-gray-600">Start Time</div>
-          <div className="w-1/6 font-bold text-gray-600">End Time</div>
-          <div className="w-1/6 font-bold text-gray-600"></div>
+export function JobTable({ data = [], showResultClick }) {
+  const [filters, setFilters] = useState({
+    status: '',
+    filterType: '',
+  });
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prevFilters => ({ ...prevFilters, [name]: value }));
+  };
+
+  const filteredData = useMemo(() => {
+    return data.filter(item => {
+      return (
+        (filters.status === '' || item.status === filters.status) &&
+        (filters.filterType === '' || item.filter === filters.filterType)
+      );
+    });
+  }, [data, filters]);
+
+  const columns = [
+    {
+      name: 'Actions',
+      button: true,
+      cell: row => (
+        <div className="flex justify-end h-fit">
+          <Button onClick={() => showResultClick(row.id)}>
+            Info
+          </Button>
         </div>
-        {/* Table Rows */}
-        {data.length > 0 ?
-          data.map((item) => (
-            <div className="flex border-b border-gray-200 p-4" key={item.id}>
-              <div className="w-1/6 text-gray-700 pr-2">{item.id}</div>
-              <div className="w-1/6 text-gray-700">{item.status}</div>
-              <div className="w-1/6 text-gray-700 pr-2">{item.filter}</div>
-              <div className="w-1/6 text-gray-700 pr-2">{formatDate(item.start_time)}</div>
-              <div className="w-1/6 text-gray-700 pr-2">{formatDate(item.end_time)}</div>
-              <div className="w-1/6 flex justify-end h-fit">
-                <Button disabled={isLoading} onClick={() => showResultClick(item.id)}>
-                  Show more
-                </Button>
-              </div>
-            </div>
-          ))
-          : <p className='font-bold'>Loading...</p>
-        }
+      )
+    },
+    {
+      name: 'ID',
+      selector: row => row.id,
+      sortable: true,
+      grow: 2,
+    },
+    {
+      name: 'Status',
+      selector: row => row.status,
+      sortable: true,
+    },
+    {
+      name: 'Filter',
+      selector: row => row.filter,
+      sortable: true,
+    },
+    {
+      name: 'Start Time',
+      selector: row => row.start_time,
+      sortable: true,
+      format: row => new Date(row.start_time).toLocaleString(),
+    },
+    {
+      name: 'End Time',
+      selector: row => row.end_time,
+      sortable: true,
+      format: row => new Date(row.end_time).toLocaleString(),
+    },
+  ];
+
+  return (
+    <div className="md:w-3/4 md:max-w-5xl overflow-auto">
+      <div className="ml-7 flex flex-wrap gap-4 mb-4">
+        <div>
+          <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
+          <select
+            name="status"
+            value={filters.status}
+            onChange={handleFilterChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          >
+            <option value="">All</option>
+            <option value="done">Done</option>
+            <option value="inprogress">In progress</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="filterType" className="block text-sm font-medium text-gray-700">Filter</label>
+          <select
+            name="filterType"
+            value={filters.filterType}
+            onChange={handleFilterChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+          >
+            <option value="">All</option>
+            <option value="blurring">Blurring</option>
+            <option value="unsharpening">UnSharpening</option>
+          </select>
+        </div>
       </div>
+
+      <DataTable columns={columns} data={filteredData}/>
     </div>
   );
 }
-

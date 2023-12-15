@@ -24,6 +24,7 @@ This project is a draft version of a React application built with Vite, Redux To
 ```bash
 cd ui
 npm install
-npm start
+npm run dev
 ```
-
+## Run BE 
+Instruction in README.md in server folder

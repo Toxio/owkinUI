@@ -5,7 +5,7 @@ import DataTable from 'react-data-table-component';
 import { useGetListQuery } from "@/core/api/index.js";
 
 export function JobTable({ showResultClick }) {
-  const { data, refetch } = useGetListQuery();
+  const { data = [], refetch } = useGetListQuery();
 
   const defaultFilters = {
     startDate: '',
@@ -22,7 +22,7 @@ export function JobTable({ showResultClick }) {
   };
 
   const filteredData = useMemo(() => {
-    return data.filter(item => {
+    return data?.filter(item => {
       const itemDate = new Date(item.start_time).setHours(0, 0, 0, 0);
       const startDate = filters.startDate ? new Date(filters.startDate).setHours(0, 0, 0, 0) : null;
       const endDate = filters.endDate ? new Date(filters.endDate).setHours(0, 0, 0, 0) : null;
@@ -157,7 +157,3 @@ JobTable.propTypes = {
   data: PropTypes.array,
   showResultClick: PropTypes.func,
 };
-
-JobTable.defaultProps = {
-  data: [],
-}

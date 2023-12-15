@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export function ImageUploadPreview({ file }) {
-  const [preview, setPreview] = useState('');
+export function ImageUploadPreview({ files }) {
+  const [previews, setPreviews] = useState([]);
 
   useEffect(() => {
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (files && files.length > 0) {
+      const newPreviews = [];
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          newPreviews.push(reader.result);
+          if (newPreviews.length === files.length) {
+            setPreviews(newPreviews);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    } else {
+      setPreviews([]);
     }
-  }, [file]);
+  }, [files]);
 
   return (
-    <div className='flex justify-center mt-4 '>
-      {preview && file && <img src={preview} alt="Preview" className="w-auto h-40 mb-4 border"/>}
+    <div className='flex justify-center mt-4 flex-wrap'>
+      {previews.map((preview, index) => (
+        <img key={index} src={preview} alt="Preview" className="w-auto h-40 mb-4 mr-4 border"/>
+      ))}
     </div>
   );
 }

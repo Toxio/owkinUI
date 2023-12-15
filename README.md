@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a draft version of a React application built with Vite, Redux Toolkit, and TailwindCSS. The goal was to create a functional, responsive web application utilizing modern development tools and practices.
+This project is a draft version of a React application built with Vite, Redux Toolkit, and TailwindCSS. The goal was to create a functional, responsive web application utilizing modern development tools and practices. The application allows users to upload files, add filters and view them in a grid. The application is not fully functional and is missing some features.
 
 ## Technology Stack
 

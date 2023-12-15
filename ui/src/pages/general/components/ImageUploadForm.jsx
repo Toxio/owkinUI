@@ -5,28 +5,35 @@ import { ImageUploadPreview } from "./ImageUploadPreview.jsx";
 
 export function ImageUploadForm() {
   const { refetch } = useGetListQuery();
-  const [createJob, { isLoading, data, error }] = useCreateJobMutation();
+  const [createJob, { isLoading, error }] = useCreateJobMutation();
 
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [filter, setFilter] = useState('Blurring');
   const [sigma, setSigma] = useState(0);
+
+  const handleFileChange = (event) => {
+    setFiles([...event.target.files]);
+  };
 
   const handleUpload = async (event) => {
     event.preventDefault();
 
-    if (!file) {
-      alert('Please select a file.');
+    if (!files.length) {
+      alert('Please select files.');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('filter', filter);
-    formData.append('sigma', sigma);
+    for (const file of files) {
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('filter', filter);
+      formData.append('sigma', sigma);
 
-    await createJob(formData).unwrap();
+      await createJob(formData).unwrap();
+    }
+
     refetch();
-    setFile(null);
+    setFiles(null);
     setFilter('Blurring');
     setSigma(0);
 
@@ -41,7 +48,8 @@ export function ImageUploadForm() {
           <label className="text-sm font-medium text-gray-700 mr-2">Image:</label>
           <input
             type="file"
-            onChange={(event) => setFile(event.target.files[0])}
+            multiple
+            onChange={handleFileChange}
             className="flex-grow text-sm text-gray-500 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
           />
         </div>
@@ -77,10 +85,9 @@ export function ImageUploadForm() {
         </Button>
       </div>
 
-      <ImageUploadPreview file={file} />
+      <ImageUploadPreview files={files}/>
 
       {isLoading && <div className="text-gray-600">Submitting...</div>}
-      {data && <div className="text-green-500">Job Created: {JSON.stringify(data)}</div>}
       {error && <div className="text-red-500">Error: {error.toString()}</div>}
     </form>
   );

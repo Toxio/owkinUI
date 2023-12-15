@@ -154,6 +154,5 @@ export function JobTable({ showResultClick }) {
 }
 
 JobTable.propTypes = {
-  data: PropTypes.array,
   showResultClick: PropTypes.func,
 };

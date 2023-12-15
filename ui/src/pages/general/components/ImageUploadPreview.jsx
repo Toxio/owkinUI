@@ -32,5 +32,5 @@ export function ImageUploadPreview({ files }) {
 }
 
 ImageUploadPreview.propTypes = {
-  onFileSelect: PropTypes.func.isRequired,
+  files: PropTypes.arrayOf(PropTypes.instanceOf(File)),
 };

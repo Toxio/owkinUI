@@ -29,7 +29,7 @@ export function ImageUploadForm() {
       formData.append('filter', filter);
       formData.append('sigma', sigma);
 
-      await createJob(formData).unwrap();
+      await createJob(formData);
     }
 
     refetch();
@@ -51,6 +51,7 @@ export function ImageUploadForm() {
             multiple
             onChange={handleFileChange}
             className="flex-grow text-sm text-gray-500 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+            data-testid="file-input"
           />
         </div>
 
@@ -60,6 +61,7 @@ export function ImageUploadForm() {
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             className="flex-grow p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            data-testid="filter-select"
           >
             <option value="Blurring">Blurring</option>
             <option value="UnSharpening">UnSharpening</option>
@@ -73,6 +75,7 @@ export function ImageUploadForm() {
             value={sigma}
             onChange={(e) => setSigma(e.target.value)}
             className="flex-grow p-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 md:w-20"
+            data-testid="sigma-input"
           />
         </div>
 

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types';
-import { Button } from "@/core/components";
+import { Button } from "@/core/components/index.js";
 import DataTable from 'react-data-table-component';
 import { useGetListQuery } from "@/core/api/index.js";
 
@@ -91,7 +91,7 @@ export function JobTable({ showResultClick }) {
   }, [data, refetch]);
 
   return (
-    <div className="md:w-3/4 md:max-w-5xl overflow-auto">
+    <div className="md:w-3/4 md:max-w-5xl overflow-auto"  data-testid="table">
       <div className="ml-7 flex flex-wrap gap-4 mb-4 items-center">
         <div>
           <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Start Date</label>
@@ -120,6 +120,7 @@ export function JobTable({ showResultClick }) {
             value={filters.status}
             onChange={handleFilterChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            data-testid="status-select"
           >
             <option value="">All</option>
             <option value="done">Done</option>

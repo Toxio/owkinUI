@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ImageUploadForm } from '@/pages/general/components/ImageUploadForm.jsx';
-import { JobTable } from "./components/JobTable";
-import { JobView } from "@/pages/general/components/index.js";
+import { ImageUploadForm } from './imageUpload';
+import { JobTable } from "./jobTable";
+import { JobView } from "./jobView";
 import logoImg from '@/assets/logo.png';
 
 export function General() {

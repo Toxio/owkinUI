@@ -32,5 +32,8 @@ export function ImageUploadPreview({ files }) {
 }
 
 ImageUploadPreview.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.instanceOf(File)),
+  files: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.instanceOf(File),
+    PropTypes.instanceOf(Blob)
+  ])),
 };

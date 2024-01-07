@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { useGetJobByIdQuery } from "@/core/api/index.js";
-import { baseUrl } from '@/core/api/api.constant';
+import { baseUrl } from '@/core/api/api.constant.js';
 
 export function JobView({ id }) {
   const { data: jobInfo, isLoading: loadingInfo } = useGetJobByIdQuery(id, {
